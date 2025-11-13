@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三島・伊豆旅行スケジュール</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        font-family: 'Hiragino Sans', 'Yu Gothic', sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 20px;
+        min-height: 100vh;
+    }
+    
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    header {
+        text-align: center;
+        color: white;
+        padding: 30px 0;
+        margin-bottom: 30px;
+    }
+    
+    h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .subtitle {
+        font-size: 1.2em;
+        opacity: 0.9;
+    }
+    
+    .day-card {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        animation: slideUp 0.5s ease-out;
+    }
+    
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .day-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 15px;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .day-icon {
+        font-size: 2em;
+    }
+    
+    .day-title {
+        font-size: 1.8em;
+        font-weight: bold;
+    }
+    
+    .event {
+        display: flex;
+        gap: 20px;
+        padding: 20px;
+        margin-bottom: 15px;
+        border-left: 4px solid #667eea;
+        background: linear-gradient(to right, #f8f9ff, white);
+        border-radius: 10px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .event:hover {
+        transform: translateX(5px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+    }
+    
+    .time {
+        font-size: 1.1em;
+        font-weight: bold;
+        color: #667eea;
+        min-width: 80px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .event-content {
+        flex: 1;
+    }
+    
+    .event-icon {
+        font-size: 1.5em;
+        margin-right: 10px;
+    }
+    
+    .event-title {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 5px;
+    }
+    
+    .event-details {
+        color: #666;
+        font-size: 0.95em;
+        line-height: 1.6;
+    }
+    
+    .transport {
+        background: linear-gradient(to right, #fff5e6, white);
+        border-left-color: #ff9800;
+    }
+    
+    .meal {
+        background: linear-gradient(to right, #fff0f0, white);
+        border-left-color: #e91e63;
+    }
+    
+    .hotel {
+        background: linear-gradient(to right, #f0f8ff, white);
+        border-left-color: #2196f3;
+    }
+    
+    .activity {
+        background: linear-gradient(to right, #f0fff4, white);
+        border-left-color: #4caf50;
+    }
+    
+    .note {
+        background: #fff9e6;
+        padding: 10px 15px;
+        border-radius: 8px;
+        margin-top: 5px;
+        font-size: 0.9em;
+        color: #856404;
+    }
+    
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 1.8em;
+        }
+        
+        .day-card {
+            padding: 20px;
+        }
+        
+        .event {
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .time {
+            min-width: auto;
+        }
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🗻 三島・伊豆旅行</h1>
+            <p class="subtitle">2024年11月14日(金) - 16日(日)</p>
+        </header>
+
+```
+    <!-- Day 1 -->
+    <div class="day-card">
+        <div class="day-header">
+            <span class="day-icon">📅</span>
+            <div>
+                <div class="day-title">1日目</div>
+                <div>11月14日(金)</div>
+            </div>
+        </div>
+
+        <div class="event transport">
+            <div class="time">🕐 6:57</div>
+            <div class="event-content">
+                <div class="event-title">🚄 東京駅発 こだま703号</div>
+                <div class="event-details">12号車9D, E</div>
+            </div>
+        </div>
+
+        <div class="event transport">
+            <div class="time">🕐 7:50</div>
+            <div class="event-content">
+                <div class="event-title">🚉 三島駅着</div>
+            </div>
+        </div>
+
+        <div class="event hotel">
+            <div class="time">🕐 8:00</div>
+            <div class="event-content">
+                <div class="event-title">🏨 富士山三島東急ホテル</div>
+                <div class="event-details">手荷物を預ける</div>
+            </div>
+        </div>
+
+        <div class="event transport">
+            <div class="time">🕐 8:15</div>
+            <div class="event-content">
+                <div class="event-title">🚌 三島駅前バス停発</div>
+                <div class="event-details">東海バス</div>
+            </div>
+        </div>
+
+        <div class="event transport">
+            <div class="time">🕐 8:45</div>
+            <div class="event-content">
+                <div class="event-title">🚏 三島スカイウォークバス停着</div>
+            </div>
+        </div>
+
+        <div class="event activity">
+            <div class="time">🕐 9:00</div>
+            <div class="event-content">
+                <div class="event-title">🌉 三島スカイウォーク散策</div>
+                <div class="event-details">日本最長の歩行者専用吊橋を楽しむ</div>
+            </div>
+        </div>
+
+        <div class="event transport">
+            <div class="time">🕐 11:04</div>
+            <div class="event-content">
+                <div class="event-title">🚌 三島スカイウォークバス停発</div>
+            </div>
+        </div>
+
+        <div class="event transport">
+            <div class="time">🕐 11:30</div>
+            <div class="event-content">
+                <div class="event-title">🚏 本町バス停着</div>
+            </div>
+        </div>
+
+        <div class="event meal">
+            <div class="time">🕐 12:15</div>
+            <div class="event-content">
+                <div class="event-title">🍱 和食蒲焼 高田屋</div>
+                <div class="event-details">ランチ予定</div>
+            </div>
+        </div>
+
+        <div class="event transport">
+            <div class="time">🕐 13:33</div>
+            <div class="event-content">
+                <div class="event-title">🚌 本町バス停発</div>
+            </div>
+        </div>
+
+        <div class="event transport">
+            <div class="time">🕐 13:43</div>
+            <div class="event-content">
+                <div class="event-title">🚏 柿田川公園前バス停着</div>
+            </div>
+        </div>
+
+        <div class="event activity">
+            <div class="time">🕐 14:00</div>
+            <div class="event-content">
+                <div class="event-title">💧 柿田川湧水公園散策</div>
+                <div class="event-details">美しい湧水を見学</div>
+            </div>
+        </div>
+
+        <div class="event transport">
+            <div class="time">🕐 15:21</div>
+            <div class="event-content">
+                <div class="event-title">🚌 柿田川公園前バス停発</div>
+            </div>
+        </div>
+
+        <div class="event transport">
+            <div class="time">🕐 15:39</div>
+            <div class="event-content">
+                <div class="event-title">🚏 三島駅前バス停着</div>
+            </div>
+        </div>
+
+        <div class="event hotel">
+            <div class="time">🕐 16:00</div>
+            <div class="event-content">
+                <div class="event-title">🏨 富士山三島東急ホテル</div>
+                <div class="event-details">Check-in</div>
+            </div>
+        </div>
+
+        <div class="event meal">
+            <div class="time">🕐 18:00</div>
+            <div class="event-content">
+                <div class="event-title">🍽️ まるごと駿河湾</div>
+                <div class="event-details">夕食</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 2 -->
+    <div class="day-card">
+        <div class="day-header">
+            <span class="day-icon">📅</span>
+            <div>
+                <div class="day-title">2日目</div>
+                <div>11月15日(土)</div>
+            </div>
+        </div>
+
+        <div class="event hotel">
+            <div class="time">🕐 8:00</div>
+            <div class="event-content">
+                <div class="event-title">🏨 富士山三島東急ホテル</div>
+                <div class="event-details">Checkout</div>
+            </div>
+        </div>
+
+        <div class="event transport">
+            <div class="time">🕐 8:09</div>
+            <div class="event-content">
+                <div class="event-title">🚃 伊豆箱根鉄道三島駅発</div>
+            </div>
+        </div>
+
+        <div class="event transport">
+            <div class="time">🕐 8:11</div>
+            <div class="event-content">
+                <div class="event-title">🚉 三島広小路駅着</div>
+                <div class="note">※荷物をコインロッカーに預ける</div>
+            </div>
+        </div>
+
+        <div class="event activity">
+            <div class="time">🕐 8:15</div>
+            <div class="event-content">
+                <div class="event-title">🌸 源兵衛川・三嶋神社・楽寿園散策</div>
+                <div class="event-details">三島の名所巡り</div>
+            </div>
+        </div>
+
+        <div class="event meal">
+            <div class="time">🕐 12:15</div>
+            <div class="event-content">
+                <div class="event-title">🍽️ ビストロ大木</div>
+                <div class="event-details">ランチ予定</div>
+            </div>
+        </div>
+
+        <div class="event transport">
+            <div class="time">🕐 13:29</div>
+            <div class="event-content">
+                <div class="event-title">🚃 三島広小路駅発</div>
+            </div>
+        </div>
+
+        <div class="event transport">
+            <div class="time">🕐 13:47</div>
+            <div class="event-content">
+                <div class="event-title">🚉 伊豆長岡駅着</div>
+            </div>
+        </div>
+
+        <div class="event transport">
+            <div class="time">🕐 14:00</div>
+            <div class="event-content">
+                <div class="event-title">🚐 三養荘 送迎バス</div>
+            </div>
+        </div>
+
+        <div class="event hotel">
+            <div class="time">🕐 15:00</div>
+            <div class="event-content">
+                <div class="event-title">🏯 三養荘 Check-in</div>
+                <div class="event-details">高級温泉旅館でゆっくり</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 3 -->
+    <div class="day-card">
+        <div class="day-header">
+            <span class="day-icon">📅</span>
+            <div>
+                <div class="day-title">3日目</div>
+                <div>11月16日(日)</div>
+            </div>
+        </div>
+
+        <div class="event hotel">
+            <div class="time">🕐 11:00</div>
+            <div class="event-content">
+                <div class="event-title">🏯 三養荘 Checkout</div>
+            </div>
+        </div>
+
+        <div class="event transport">
+            <div class="time">🕐 11:10</div>
+            <div class="event-content">
+                <div class="event-title">🚉 伊豆長岡駅着</div>
+                <div class="event-details">レンタサイクル</div>
+            </div>
+        </div>
+
+        <div class="event meal">
+            <div class="time">🕐 11:30</div>
+            <div class="event-content">
+                <div class="event-title">🍜 陣中いし井</div>
+                <div class="event-details">ランチ予定</div>
+            </div>
+        </div>
+
+        <div class="event activity">
+            <div class="time">🕐 13:00</div>
+            <div class="event-content">
+                <div class="event-title">🏭 韮山反射炉 見学</div>
+                <div class="event-details">世界遺産を観光</div>
+            </div>
+        </div>
+
+        <div class="event transport">
+            <div class="time">🕐 14:10</div>
+            <div class="event-content">
+                <div class="event-title">🚲 伊豆長岡駅着</div>
+                <div class="event-details">レンタサイクル返却</div>
+            </div>
+        </div>
+
+        <div class="event transport">
+            <div class="time">🕐 14:21</div>
+            <div class="event-content">
+                <div class="event-title">🚃 伊豆長岡駅発</div>
+            </div>
+        </div>
+
+        <div class="event transport">
+            <div class="time">🕐 14:42</div>
+            <div class="event-content">
+                <div class="event-title">🚉 伊豆箱根鉄道 三島駅着</div>
+            </div>
+        </div>
+
+        <div class="event transport">
+            <div class="time">🕐 15:58</div>
+            <div class="event-content">
+                <div class="event-title">🚄 三島駅発 ひかり510号</div>
+                <div class="event-details">6号車16番D, E</div>
+            </div>
+        </div>
+
+        <div class="event transport">
+            <div class="time">🕐 16:42</div>
+            <div class="event-content">
+                <div class="event-title">🎌 東京駅着</div>
+                <div class="event-details">お疲れ様でした！</div>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+</body>
+</html>
