@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三島・伊豆旅行</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        font-family: 'Noto Sans JP', sans-serif;
+        background: linear-gradient(to bottom, #1e3c72, #2a5298);
+        color: #333;
+        font-size: 14px;
+        line-height: 1.6;
+        padding: 15px;
+    }
+    
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    header {
+        text-align: center;
+        color: white;
+        padding: 20px 0;
+        margin-bottom: 20px;
+    }
+    
+    h1 {
+        font-size: 1.8em;
+        margin-bottom: 5px;
+        font-weight: 700;
+    }
+    
+    .subtitle {
+        font-size: 1em;
+        opacity: 0.95;
+    }
+    
+    .day-card {
+        background: white;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .day-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 15px;
+        font-size: 1.2em;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        user-select: none;
+    }
+    
+    .day-header:hover {
+        background: linear-gradient(135deg, #7c8ef5 0%, #8a5ab5 100%);
+    }
+    
+    .arrow {
+        transition: transform 0.3s ease;
+        font-size: 1.2em;
+    }
+    
+    .arrow.open {
+        transform: rotate(180deg);
+    }
+    
+    .schedule-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+    }
+    
+    .schedule-content.open {
+        max-height: 2000px;
+    }
+    
+    .schedule-inner {
+        padding: 15px;
+    }
+    
+    .event {
+        display: grid;
+        grid-template-columns: 50px 1fr;
+        gap: 10px;
+        padding: 10px;
+        margin-bottom: 8px;
+        border-left: 3px solid #667eea;
+        background: #f8f9ff;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    
+    .event:hover {
+        transform: translateX(3px);
+        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+    }
+    
+    .time {
+        font-size: 0.95em;
+        font-weight: 700;
+        color: #667eea;
+    }
+    
+    .event-content {
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+    }
+    
+    .event-icon {
+        font-size: 1.3em;
+        flex-shrink: 0;
+    }
+    
+    .event-title {
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 3px;
+    }
+    
+    .event-details {
+        color: #666;
+        font-size: 0.9em;
+    }
+    
+    .transport { background: #fff8f0; border-left-color: #ff9800; }
+    .transport .time { color: #ff9800; }
+    .meal { background: #fff5f7; border-left-color: #e91e63; }
+    .meal .time { color: #e91e63; }
+    .hotel { background: #f0f8ff; border-left-color: #2196f3; }
+    .hotel .time { color: #2196f3; }
+    .activity { background: #f0fff7; border-left-color: #4caf50; }
+    .activity .time { color: #4caf50; }
+    
+    .note {
+        background: #fff9e6;
+        padding: 5px 8px;
+        border-radius: 5px;
+        margin-top: 5px;
+        font-size: 0.85em;
+        color: #856404;
+    }
+    
+    .info-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        padding: 20px;
+        overflow-y: auto;
+    }
+    
+    .info-modal.active {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .info-content {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        max-width: 500px;
+        width: 100%;
+        max-height: 80vh;
+        overflow-y: auto;
+        position: relative;
+        animation: slideIn 0.3s ease;
+    }
+    
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 1.8em;
+        cursor: pointer;
+        color: #999;
+        background: none;
+        border: none;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.2s ease;
+    }
+    
+    .close-btn:hover {
+        background: #f0f0f0;
+        color: #333;
+    }
+    
+    .info-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #f0f0f0;
+    }
+    
+    .info-icon {
+        font-size: 2em;
+    }
+    
+    .info-title {
+        font-size: 1.4em;
+        font-weight: 700;
+        color: #333;
+    }
+    
+    .info-image {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 10px;
+        margin: 15px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4em;
+        color: white;
+    }
+    
+    .info-description {
+        color: #555;
+        line-height: 1.8;
+        margin-bottom: 15px;
+    }
+    
+    .info-highlights {
+        background: #f8f9ff;
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 15px;
+    }
+    
+    .info-highlights h3 {
+        font-size: 1.1em;
+        color: #667eea;
+        margin-bottom: 10px;
+    }
+    
+    .info-highlights ul {
+        list-style: none;
+        padding-left: 0;
+    }
+    
+    .info-highlights li {
+        padding: 5px 0;
+        padding-left: 20px;
+        position: relative;
+    }
+    
+    .info-highlights li:before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: #4caf50;
+        font-weight: bold;
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🗻 三島・伊豆旅行</h1>
+            <p class="subtitle">11月14日(金) - 16日(日)</p>
+        </header>
+
+```
+    <!-- Day 1 -->
+    <div class="day-card">
+        <div class="day-header" onclick="toggleDay(this)">
+            <span>1日目 - 11/14(金)</span>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="schedule-content">
+            <div class="schedule-inner">
+                <div class="event transport">
+                    <div class="time">6:57</div>
+                    <div class="event-content">
+                        <span class="event-icon">🚄</span>
+                        <div>
+                            <div class="event-title">東京駅→三島駅</div>
+                            <div class="event-details">こだま703号 12-9DE</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event hotel">
+                    <div class="time">8:00</div>
+                    <div class="event-content">
+                        <span class="event-icon">🏨</span>
+                        <div>
+                            <div class="event-title">富士山三島東急ホテル</div>
+                            <div class="event-details">手荷物預け</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event activity" onclick="showInfo('skywalk')">
+                    <div class="time">9:00</div>
+                    <div class="event-content">
+                        <span class="event-icon">🌉</span>
+                        <div>
+                            <div class="event-title">三島スカイウォーク散策</div>
+                            <div class="event-details">タップして詳細を見る →</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event meal" onclick="showInfo('takadaya')">
+                    <div class="time">12:15</div>
+                    <div class="event-content">
+                        <span class="event-icon">🍱</span>
+                        <div>
+                            <div class="event-title">和食蒲焼 高田屋</div>
+                            <div class="event-details">タップして詳細を見る →</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event activity" onclick="showInfo('kakita')">
+                    <div class="time">14:00</div>
+                    <div class="event-content">
+                        <span class="event-icon">💧</span>
+                        <div>
+                            <div class="event-title">柿田川湧水公園散策</div>
+                            <div class="event-details">タップして詳細を見る →</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event hotel">
+                    <div class="time">16:00</div>
+                    <div class="event-content">
+                        <span class="event-icon">🏨</span>
+                        <div>
+                            <div class="event-title">富士山三島東急ホテル Check-in</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event meal" onclick="showInfo('marugoto')">
+                    <div class="time">18:00</div>
+                    <div class="event-content">
+                        <span class="event-icon">🍽️</span>
+                        <div>
+                            <div class="event-title">まるごと駿河湾</div>
+                            <div class="event-details">タップして詳細を見る →</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 2 -->
+    <div class="day-card">
+        <div class="day-header" onclick="toggleDay(this)">
+            <span>2日目 - 11/15(土)</span>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="schedule-content">
+            <div class="schedule-inner">
+                <div class="event hotel">
+                    <div class="time">8:00</div>
+                    <div class="event-content">
+                        <span class="event-icon">🏨</span>
+                        <div>
+                            <div class="event-title">ホテル Checkout</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event transport">
+                    <div class="time">8:09</div>
+                    <div class="event-content">
+                        <span class="event-icon">🚃</span>
+                        <div>
+                            <div class="event-title">三島駅→三島広小路駅</div>
+                            <div class="note">荷物をコインロッカーへ</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event activity" onclick="showInfo('genbei')">
+                    <div class="time">8:15</div>
+                    <div class="event-content">
+                        <span class="event-icon">🌸</span>
+                        <div>
+                            <div class="event-title">源兵衛川・三嶋神社・楽寿園</div>
+                            <div class="event-details">タップして詳細を見る →</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event meal" onclick="showInfo('bistro')">
+                    <div class="time">12:15</div>
+                    <div class="event-content">
+                        <span class="event-icon">🍽️</span>
+                        <div>
+                            <div class="event-title">ビストロ大木</div>
+                            <div class="event-details">タップして詳細を見る →</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event hotel" onclick="showInfo('sanyoso')">
+                    <div class="time">15:00</div>
+                    <div class="event-content">
+                        <span class="event-icon">🏯</span>
+                        <div>
+                            <div class="event-title">三養荘 Check-in</div>
+                            <div class="event-details">タップして詳細を見る →</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 3 -->
+    <div class="day-card">
+        <div class="day-header" onclick="toggleDay(this)">
+            <span>3日目 - 11/16(日)</span>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="schedule-content">
+            <div class="schedule-inner">
+                <div class="event hotel">
+                    <div class="time">11:00</div>
+                    <div class="event-content">
+                        <span class="event-icon">🏯</span>
+                        <div>
+                            <div class="event-title">三養荘 Checkout</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event meal" onclick="showInfo('ishii')">
+                    <div class="time">11:30</div>
+                    <div class="event-content">
+                        <span class="event-icon">🍜</span>
+                        <div>
+                            <div class="event-title">陣中いし井</div>
+                            <div class="event-details">タップして詳細を見る →</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event activity" onclick="showInfo('hansharo')">
+                    <div class="time">13:00</div>
+                    <div class="event-content">
+                        <span class="event-icon">🏭</span>
+                        <div>
+                            <div class="event-title">韮山反射炉 見学</div>
+                            <div class="event-details">タップして詳細を見る →</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event transport">
+                    <div class="time">15:58</div>
+                    <div class="event-content">
+                        <span class="event-icon">🚄</span>
+                        <div>
+                            <div class="event-title">三島駅→東京駅</div>
+                            <div class="event-details">ひかり510号 6-16DE</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event transport">
+                    <div class="time">16:42</div>
+                    <div class="event-content">
+                        <span class="event-icon">🎌</span>
+                        <div>
+                            <div class="event-title">東京駅着</div>
+                            <div class="event-details">お疲れ様でした！</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Info Modal -->
+<div class="info-modal" id="infoModal" onclick="closeModal(event)">
+    <div class="info-content" onclick="event.stopPropagation()">
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+        <div id="modalContent"></div>
+    </div>
+</div>
+
+<script>
+    function toggleDay(header) {
+        const content = header.nextElementSibling;
+        const arrow = header.querySelector('.arrow');
+        
+        content.classList.toggle('open');
+        arrow.classList.toggle('open');
+    }
+
+    function closeModal(event) {
+        if (event) event.stopPropagation();
+        document.getElementById('infoModal').classList.remove('active');
+    }
+
+    function showInfo(place) {
+        const modal = document.getElementById('infoModal');
+        const content = document.getElementById('modalContent');
+        
+        const info = {
+            skywalk: {
+                icon: '🌉',
+                title: '三島スカイウォーク',
+                description: '日本最長400mの歩行者専用吊橋。晴れた日には富士山の絶景を眺めながら空中散歩が楽しめます。橋の上からは駿河湾や伊豆の山々も一望できます。',
+                highlights: ['全長400メートルの絶景吊橋', '富士山の絶景スポット', 'アクティビティ施設も充実', 'フォトスポット多数']
+            },
+            takadaya: {
+                icon: '🍱',
+                title: '和食蒲焼 高田屋',
+                description: '三島の老舗うなぎ料理店。富士山の伏流水で育った極上の鰻を使用した蒲焼は絶品です。地元の食材を使った和食も評判です。',
+                highlights: ['老舗うなぎ料理専門店', '富士山伏流水で育った鰻', '伝統の蒲焼技法', '地元食材を使用']
+            },
+            kakita: {
+                icon: '💧',
+                title: '柿田川湧水公園',
+                description: '富士山の雪解け水が湧き出る国内最大級の湧水地。透明度の高い美しい水と豊かな自然が魅力。日本の名水百選にも選ばれています。',
+                highlights: ['国内最大級の湧水量', '日本の名水百選', '透明度抜群の湧き水', '美しい自然環境']
+            },
+            marugoto: {
+                icon: '🍽️',
+                title: 'まるごと駿河湾',
+                description: '駿河湾で獲れた新鮮な海の幸を堪能できる海鮮料理店。地元の漁師から直接仕入れる魚介類は鮮度抜群です。',
+                highlights: ['駿河湾の新鮮な海鮮', '地元漁師直送', '旬の魚介料理', '地酒も豊富']
+            },
+            genbei: {
+                icon: '🌸',
+                title: '源兵衛川・三嶋神社・楽寿園',
+                description: '三島を代表する観光スポット。源兵衛川は清らかな水が流れる散策路、三嶋神社は歴史ある古社、楽寿園は美しい日本庭園が楽しめます。',
+                highlights: ['清流沿いの散策路', '歴史ある三嶋大社', '国の天然記念物・楽寿園', '四季折々の自然']
+            },
+            bistro: {
+                icon: '🍽️',
+                title: 'ビストロ大木',
+                description: '地元食材を使ったフレンチビストロ。静岡県産の新鮮な野菜と魚介を使った創作料理が評判。落ち着いた雰囲気の店内でゆっくり食事を楽しめます。',
+                highlights: ['地元食材のフレンチ', '創作料理が人気', '落ち着いた雰囲気', 'ワインセレクション']
+            },
+            sanyoso: {
+                icon: '🏯',
+                title: '三養荘',
+                description: '伊豆長岡温泉を代表する高級温泉旅館。広大な日本庭園と歴史ある建築物が魅力。源泉かけ流しの温泉と季節の会席料理が楽しめます。',
+                highlights: ['歴史ある高級温泉旅館', '美しい日本庭園', '源泉かけ流し温泉', '季節の会席料理']
+            },
+            ishii: {
+                icon: '🍜',
+                title: '陣中いし井',
+                description: '伊豆長岡で人気の和食処。新鮮な地魚を使った海鮮丼や定食が自慢。地元の人にも愛される隠れた名店です。',
+                highlights: ['地元で人気の和食', '新鮮な地魚料理', '海鮮丼が絶品', 'コスパ抜群']
+            },
+            hansharo: {
+                icon: '🏭',
+                title: '韮山反射炉',
+                description: '世界文化遺産「明治日本の産業革命遺産」の構成資産。江戸時代末期に建造された実用炉で、当時の最先端技術を今に伝える貴重な産業遺産です。',
+                highlights: ['世界文化遺産', '江戸時代の産業遺産', '実用炉として現存', '歴史的価値が高い']
+            }
+        };
+
+        const data = info[place];
+        if (data) {
+            content.innerHTML = `
+                <div class="info-header">
+                    <span class="info-icon">${data.icon}</span>
+                    <h2 class="info-title">${data.title}</h2>
+                </div>
+                <div class="info-image">${data.icon}</div>
+                <div class="info-description">${data.description}</div>
+                <div class="info-highlights">
+                    <h3>✨ 見どころ・特徴</h3>
+                    <ul>
+                        ${data.highlights.map(h => `<li>${h}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            modal.classList.add('active');
+        }
+    }
+</script>
+```
+
+</body>
+</html>
